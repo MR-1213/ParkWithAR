@@ -5,11 +5,10 @@ using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
-    //移動スピードを格納する変数
-    private float speed = 5f;
+    
 
-    //bool型の状態変数
-    public bool status = true;
+    //速度の変数
+    public float speed = 5f;
 
     // Update is called once per frame
     void Update()
@@ -22,27 +21,8 @@ public class Player : MonoBehaviour
 
         //回転を更新する
         transform.rotation = Quaternion.Euler(JoyStickCam.rotY, JoyStickCam.rotX, 0);
-
     }
 
-    //歩くと走るを切り替える
-    public void RunOrWalk(BaseEventData data)
-    {
-        if(status == true)
-        {
-            speed = 100f;
-            status = false;
-        }
-        else
-        {
-            speed = 5f;
-            status = true;
-        }
-
-
-
-    }
-    
 
 
 }

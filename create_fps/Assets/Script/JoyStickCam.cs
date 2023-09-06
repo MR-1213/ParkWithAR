@@ -25,7 +25,7 @@ public class JoyStickCam : MonoBehaviour
 
 
     //右画面をドラックしているときに呼ぶ関数
-    public void OnAnimatorMove(BaseEventData data)
+    public void Move(BaseEventData data)
     {
         PointerEventData pointer = data as PointerEventData;
 

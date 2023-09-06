@@ -16,6 +16,8 @@ public class JoyStick_Move : MonoBehaviour
     //é¿ç€Ç…ìÆÇ≠íl
     private int stickMovement = 0;
 
+
+
     public static float joyStickPosX;
     public static float joyStickPosY;
 
@@ -88,8 +90,7 @@ public class JoyStick_Move : MonoBehaviour
         joyStickPosY = 0;
     }
 
-        
- }
+}
 
 
 /*
