@@ -25,6 +25,40 @@ public class Speed_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (SpeedFlag)
+        {
+            SpeedController = runningSpeed;
+            //Debug.Log("SpeedController>>>" + SpeedController);
+        }
+        else
+        {
+            SpeedController = walkingSpeed;
+            //Debug.Log("SpeedController>>>" + SpeedController);
+        }
+    }
+
+    //EventTriggerのPointerDownにアタッチ
+    public void OnButtonDown()
+    {
+        SpeedFlag = true;
+        //Debug.Log("SpeedFlag>>>" + SpeedFlag);
+    }
+
+    //EventTriggerのPointerUpにアタッチ
+    public void OnButtonUP()
+    {
+        SpeedFlag = false;
+        //Debug.Log("SpeedFlag>>>" + SpeedFlag);
+    }
+
+}
+
+/*
+ * [メモ：ボタンを押して歩くと走るを切り替えるためのコード]
+ * 
+ // Update is called once per frame
+    void Update()
+    {
         //Debug.Log("If BEFORE>>" + SpeedFlag);
         if (SpeedFlag)
         {
@@ -45,5 +79,5 @@ public class Speed_Controller : MonoBehaviour
         SpeedFlag = !SpeedFlag;
         //Debug.Log("Clicked! AFTER>>" + SpeedFlag);
     }
+ */
 
-}

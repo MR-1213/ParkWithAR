@@ -8,10 +8,13 @@ public class Jump : MonoBehaviour
     public Rigidbody rb;
     public float jumpPower = 10;
 
+    //ジャンプ可能か
     private static bool JumpFlag = true;
+
+    //ボタンが押されたか
     private static bool ButtonFlag = false;
 
-    DateTime dt = DateTime.Now;
+    //DateTime dt = DateTime.Now;
 
     void Start()
     {
