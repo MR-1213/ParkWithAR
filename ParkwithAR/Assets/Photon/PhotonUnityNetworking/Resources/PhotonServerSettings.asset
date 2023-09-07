@@ -42,6 +42,10 @@ MonoBehaviour:
   - AssignRoleToPlayer
   - SyncPlayerRole
   - SyncPlayerRoleMessage
+  - SyncPlayerHideWinMessage
+  - SyncPlayerSeekWinMessage
+  - SyncPlayerRoleImage
+  - SyncPlayerRoleString
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

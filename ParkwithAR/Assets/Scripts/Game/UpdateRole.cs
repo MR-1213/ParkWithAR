@@ -14,6 +14,7 @@ public class UpdateRole : MonoBehaviourPunCallbacks
     private CanvasGroup roleMessageCanvasGroup;
     private TMP_Text preparationText;
     private Image sceneTransitionImage;
+    private int isPrepared = 0;
     public TMP_Text debugText;
 
     private void Start()
@@ -39,14 +40,26 @@ public class UpdateRole : MonoBehaviourPunCallbacks
         }).WaitForCompletion();
 
         // 自分のプレイヤーの役割を取得
-        Sprite playerRoleImage = photonView.IsMine ? GamePlayManager.Instance.GetPlayerRoleImage() : null;
+        Sprite playerRoleImage = null;
+        while(true)
+        {
+            playerRoleImage = photonView.IsMine ? GamePlayManager.Instance.GetPlayerRoleImage() : null;
+            if(playerRoleImage != null || !photonView.IsMine)
+            {
+                break;
+            }
+            yield return null;
+        }
+        
+        Debug.Log("playerRoleImage: " + playerRoleImage);
 
         roleCanvasGroup.alpha = 0f;
         roleImage.sprite =  playerRoleImage;
 
         //自分の役割のメッセージを取得
         string playerRoleMessage = photonView.IsMine ? GamePlayManager.Instance.GetPlayerRoleMessage() : "";
-
+        Debug.Log("playerRoleMessage: " + playerRoleMessage);
+        
         //自分の役割を伝えるメッセージを表示する
         roleMessageText.text = playerRoleMessage;
         //準備時間分待機してからメッセージを表示してフェードアウト
@@ -61,4 +74,11 @@ public class UpdateRole : MonoBehaviourPunCallbacks
             });
         }
     }
+
+    public void ShowWinMessage(string message)
+    {
+        roleMessageCanvasGroup.alpha = 1f;
+        roleMessageText.text = message;
+    }
+    
 }

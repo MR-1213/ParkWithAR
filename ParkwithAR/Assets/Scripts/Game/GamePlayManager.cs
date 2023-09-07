@@ -15,8 +15,12 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
     [SerializeField] private Sprite seekImage;
     [SerializeField] private Sprite hideImage;
 
+    public Dictionary<int, string> playerRoles = new Dictionary<int, string>();
     private Dictionary<int, Sprite> playerRoleImages = new Dictionary<int, Sprite>();
     private Dictionary<int, string> playerRoleMessages = new Dictionary<int, string>();
+    private Dictionary<int, string> playerSeekWinMessages = new Dictionary<int, string>();
+    private Dictionary<int, string> playerHideWinMessages = new Dictionary<int, string>();
+    public bool isGameOver = false;
     private TMP_Text debugText;
 
     private void Awake()
@@ -68,24 +72,60 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
         for (int i = 0; i < players.Length; i++)
         {
             int actorNumber = players[i].ActorNumber;
+
+            // プレイヤーの役割を設定
+            string role = i == seekPlayerIndex ? "Seek" : "Hide";
             Sprite roleImage = i == seekPlayerIndex ? seekImage : hideImage;
             string roleMessage = i == seekPlayerIndex ? "あなたは<color=red>Seek</color>です" : "あなたは<color=blue>Hide</color>です";
+            string seekWinMessage = i == seekPlayerIndex ? "全員捕まえた！" : "全員捕まってしまった...";
+            string hideWinMessage = i == seekPlayerIndex ? "逃げ切られた..." : "逃げ切った！";
             
             // プレイヤーと役割を紐付ける
-            AssignRoleToPlayer(actorNumber, roleImage);
+            AssignRoleStringToPlayer(actorNumber, role);
+            AssignRoleImageToPlayer(actorNumber, roleImage);
             //プレイヤーと役割メッセージを紐づける
             AssignRoleMessageToPlayer(actorNumber, roleMessage);
+            //プレイヤーとSeek勝利メッセージを紐づける
+            AssignSeekWinMessageToPlayer(actorNumber, seekWinMessage);
+            //プレイヤーとHide勝利メッセージを紐づける
+            AssignHideWinMessageToPlayer(actorNumber, hideWinMessage);
 
+            /*
             // 自分のプレイヤーにだけ役割を表示する
             if (players[i].IsLocal)
             {
                 UpdateRoleTextBasedOnRole();
                 UpdateRoleMessageTextBasedOnRole();
             }
+            */
         }
     }
 
-    private void AssignRoleToPlayer(int actorNumber, Sprite roleImage)
+    private void AssignRoleStringToPlayer(int actorNumber, string role)
+    {
+        // プレイヤーに役割を割り当てる
+        // ローカルプレイヤー以外のプレイヤーにはRPC経由で割り当てる
+        if (!playerRoles.ContainsKey(actorNumber))
+        {
+            playerRoles.Add(actorNumber, role);
+
+            // 他のクライアントにも役割を通知する
+            photonView.RPC("SyncPlayerRoleString", RpcTarget.Others, actorNumber, role);
+        }
+    }
+
+    [PunRPC]
+    private void SyncPlayerRoleString(int actorNumber, string role)
+    {
+        // プレイヤーに役割を割り当てる
+        // ローカルプレイヤー以外のプレイヤーにはRPC経由で割り当てる
+        if (!playerRoles.ContainsKey(actorNumber))
+        {
+            playerRoles.Add(actorNumber, role);
+        }
+    }
+
+    private void AssignRoleImageToPlayer(int actorNumber, Sprite roleImage)
     {
         // プレイヤーに役割を割り当てる
         // ローカルプレイヤー以外のプレイヤーにはRPC経由で割り当てる
@@ -94,12 +134,12 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
             playerRoleImages.Add(actorNumber, roleImage);
 
             // 他のクライアントにも役割を通知する
-            photonView.RPC("SyncPlayerRole", RpcTarget.Others, actorNumber, roleImage);
+            photonView.RPC("SyncPlayerRoleImage", RpcTarget.Others, actorNumber, roleImage);
         }
     }
 
     [PunRPC]
-    private void SyncPlayerRole(int actorNumber, Sprite roleImage)
+    private void SyncPlayerRoleImage(int actorNumber, Sprite roleImage)
     {
         // プレイヤーに役割を割り当てる
         // ローカルプレイヤー以外のプレイヤーにはRPC経由で割り当てる
@@ -130,6 +170,46 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
         }
     }
 
+    private void AssignSeekWinMessageToPlayer(int actorNumber, string seekWinMessage)
+    {
+        if(!playerSeekWinMessages.ContainsKey(actorNumber))
+        {
+            playerSeekWinMessages.Add(actorNumber, seekWinMessage);
+
+            //他のクライアントにもSeek勝利メッセージを通知する
+            photonView.RPC("SyncPlayerSeekWinMessage", RpcTarget.Others, actorNumber, seekWinMessage);
+        }
+    }
+
+    [PunRPC]
+    private void SyncPlayerSeekWinMessage(int actorNumber, string seekWinMessage)
+    {
+        if(!playerSeekWinMessages.ContainsKey(actorNumber))
+        {
+            playerSeekWinMessages.Add(actorNumber, seekWinMessage);
+        }
+    }
+
+    private void AssignHideWinMessageToPlayer(int actorNumber, string hideWinMessage)
+    {
+        if(!playerHideWinMessages.ContainsKey(actorNumber))
+        {
+            playerHideWinMessages.Add(actorNumber, hideWinMessage);
+
+            //他のクライアントにもHide勝利メッセージを通知する
+            photonView.RPC("SyncPlayerHideWinMessage", RpcTarget.Others, actorNumber, hideWinMessage);
+        }
+    }
+
+    [PunRPC]
+    private void SyncPlayerHideWinMessage(int actorNumber, string hideWinMessage)
+    {
+        if(!playerHideWinMessages.ContainsKey(actorNumber))
+        {
+            playerHideWinMessages.Add(actorNumber, hideWinMessage);
+        }
+    }
+
     private void Update() 
     {
         // ルームに入っていない場合は何もしない
@@ -148,6 +228,10 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
             //準備時間の分、経過時間を引く
             elapsedTime -= preparationTime;
             timerText.text = timeLimit - elapsedTime > 0 ? (timeLimit - elapsedTime).ToString("F0") : "0";
+            if(timeLimit - elapsedTime <= 0 && !isGameOver)
+            {
+                isGameOver = true;
+            }
         }
     }
 
@@ -173,6 +257,29 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
         return "";
     }
 
+    public string GetSeekWinMessage()
+    {
+        // 自分のプレイヤーのSeek勝利メッセージを取得
+        int actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
+        if (playerSeekWinMessages.ContainsKey(actorNumber))
+        {
+            return playerSeekWinMessages[actorNumber];
+        }
+        return "";
+    }
+
+    public string GetHideWinMessage()
+    {
+        // 自分のプレイヤーのHide勝利メッセージを取得
+        int actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
+        if (playerHideWinMessages.ContainsKey(actorNumber))
+        {
+            return playerHideWinMessages[actorNumber];
+        }
+        return "";
+    }
+
+    /*
     private void UpdateRoleTextBasedOnRole()
     {
         // 自分のプレイヤーの子オブジェクトのTextを更新
@@ -194,4 +301,5 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
             localPlayerText.text = GetPlayerRoleMessage();
         }
     }
+    */
 }
