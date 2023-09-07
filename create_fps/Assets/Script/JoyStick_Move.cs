@@ -85,7 +85,7 @@ public class JoyStick_Move : MonoBehaviour
     public void PositionInitialization()
     {
         joyStickRectTransform.anchoredPosition = Vector2.zero;
-        //指を話たときにプレイヤーの移動をやめる
+        //指を離したときにプレイヤーの移動をやめる
         joyStickPosX = 0;
         joyStickPosY = 0;
     }

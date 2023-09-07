@@ -24,7 +24,7 @@ public class Jump : MonoBehaviour
         {
             ButtonFlag = false;
             //Debug.Log("BEFORE>>jumpFlag:" + JumpFlag);
-            Debug.Log(dt + "条件前>>>" + JumpFlag);
+            //Debug.Log(dt + "条件前>>>" + JumpFlag);
             if (JumpFlag)
             {
                 rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
@@ -33,7 +33,7 @@ public class Jump : MonoBehaviour
         }
     }
 
-    public void OnClick()
+    public void OnClickJump()
     {
         ButtonFlag = true;
         //Debug.Log("Clicked:" + ButtonFlag);
@@ -45,7 +45,7 @@ public class Jump : MonoBehaviour
         {
             JumpFlag = true;
             //Debug.Log("着地:" + JumpFlag);
-            Debug.Log(dt + "着地後>>>" + JumpFlag);
+            //Debug.Log(dt + "着地後>>>" + JumpFlag);
         }
     }
 
@@ -55,22 +55,13 @@ public class Jump : MonoBehaviour
         {
             JumpFlag = false;
             //Debug.Log("離陸:" + JumpFlag);
-            Debug.Log(dt + "離陸後>>>" + JumpFlag);
+            //Debug.Log(dt + "離陸後>>>" + JumpFlag);
         }
     }
 
-    //void OnCollisionStay(Collision collision)
-    //{
-    //    if (collision.gameObject.tag == "floor")
-    //    {
-    //        JumpFlag = true;
-    //        Debug.Log("空中:" + JumpFlag);
-    //    }
-    //}
-
 }
 
-
+//Spaceキーでジャンプ
 //void Update()
 //{
 //    if (Input.GetKeyDown(KeyCode.Space))
