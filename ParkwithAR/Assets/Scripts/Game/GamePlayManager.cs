@@ -9,18 +9,33 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
 {
     public static GamePlayManager Instance;
 
+    private ChangeModeController changeModeController;
+
     public float timeLimit = 180f;
     public float preparationTime = 10f;
     [SerializeField] private TMP_Text timerText;
+    [SerializeField] private TMP_Text avatorTimerText;
     [SerializeField] private Sprite seekImage;
     [SerializeField] private Sprite hideImage;
+    [SerializeField] private Button changeToARButton;
 
+    public GameObject joinedPlayer;
     public Dictionary<int, string> playerRoles = new Dictionary<int, string>();
     private Dictionary<int, Sprite> playerRoleImages = new Dictionary<int, Sprite>();
     private Dictionary<int, string> playerRoleMessages = new Dictionary<int, string>();
     private Dictionary<int, string> playerSeekWinMessages = new Dictionary<int, string>();
     private Dictionary<int, string> playerHideWinMessages = new Dictionary<int, string>();
     public bool isGameOver = false;
+
+    //アバターを使用できる制限時間
+    public float avatarLimitTime = 30f;
+
+    //アバターを使用している時間
+    public float avatarTime = 0f;
+
+    //アバターを使用しているかどうか
+    public bool isAvatar = false;
+
     private TMP_Text debugText;
 
     private void Awake()
@@ -44,10 +59,11 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
         PhotonNetwork.IsMessageQueueRunning = true;
 
         debugText = GameObject.Find("DebugText").GetComponent<TMP_Text>();
+        changeModeController = GetComponent<ChangeModeController>();
 
         // プレイヤーを生成
         var v = new Vector3(Random.Range(-3f, 3f), 0f, Random.Range(-3f, 3f));
-        PhotonNetwork.Instantiate("Player", v, Quaternion.identity);
+        joinedPlayer = PhotonNetwork.Instantiate("Player", v, Quaternion.identity);
 
         //ルームを作成したプレイヤーのみの処理
         if(PhotonNetwork.IsMasterClient)
@@ -232,6 +248,27 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
             {
                 isGameOver = true;
             }
+        }
+
+        if(isAvatar)
+        {
+            //アバターを使用している場合は、使用時間を更新
+            avatarTime += Time.deltaTime;
+            if(avatarTime >= avatarLimitTime)
+            {
+                //アバターを使用できる制限時間を超えたら、アバターを使用できないようにする
+                changeToARButton.onClick.Invoke();
+            }
+            else
+            {
+                //アバターを使用できる制限時間を超えていない場合は、残り時間を表示
+                avatorTimerText.text = (avatarLimitTime - avatarTime).ToString("F0");
+            }
+        }
+        else
+        {
+            //アバターを使用していない場合は、使用時間をリセット
+            avatarTime = 0f;
         }
     }
 

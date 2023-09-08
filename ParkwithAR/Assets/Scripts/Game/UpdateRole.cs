@@ -14,7 +14,6 @@ public class UpdateRole : MonoBehaviourPunCallbacks
     private CanvasGroup roleMessageCanvasGroup;
     private TMP_Text preparationText;
     private Image sceneTransitionImage;
-    private int isPrepared = 0;
     public TMP_Text debugText;
 
     private void Start()
