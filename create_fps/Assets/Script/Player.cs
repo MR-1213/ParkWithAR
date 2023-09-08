@@ -14,14 +14,14 @@ public class Player : MonoBehaviour
         speed = Speed_Controller.SpeedController;
 
         //開発用
-        //if (speed == Speed_Controller.runningSpeed)
-        //{
-        //    Debug.Log("speedが" + speed + "になった！");
-        //}
-        //else if (speed == Speed_Controller.walkingSpeed)
-        //{
-        //    Debug.Log("speedが" + speed + "になった！");
-        //}
+        if (speed == Speed_Controller.runningSpeed)
+        {
+            //Debug.Log("speedが" + speed + "になった！");
+        }
+        else if (speed == Speed_Controller.walkingSpeed)
+        {
+            //Debug.Log("speedが" + speed + "になった！");
+        }
 
         //動く方向を変数に格納
         Vector3 moveDire = ((transform.forward * JoyStick_Move.joyStickPosY) + (transform.right * JoyStick_Move.joyStickPosX)).normalized;
