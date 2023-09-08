@@ -3,6 +3,7 @@
 
 # バックアップフォルダ
 *_BackUpThisFolder_ButDontShipItWithYourGame
+*_BurstDebugInformation_DoNotShip
 
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
