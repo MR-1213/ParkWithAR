@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class Jump : MonoBehaviour
+public class Jump : MonoBehaviourPunCallbacks
 {
     public Rigidbody rb;
     public float jumpPower = 10;
@@ -23,19 +24,23 @@ public class Jump : MonoBehaviour
 
     void Update()
     {
-        if (ButtonFlag)
+        if(photonView.IsMine)
         {
-            ButtonFlag = false;
-            if (JumpFlag)
+            if (ButtonFlag)
             {
-                rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+                ButtonFlag = false;
+                if (JumpFlag)
+                {
+                    rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+                }
+                JumpFlag = false;
             }
-            JumpFlag = false;
         }
     }
 
     public void OnClick()
     {
+        Debug.Log("JumpButton");
         ButtonFlag = true;
     }
 
@@ -60,7 +65,7 @@ public class Jump : MonoBehaviour
     //    if (collision.gameObject.tag == "floor")
     //    {
     //        JumpFlag = true;
-    //        Debug.Log("‹ó’†:" + JumpFlag);
+    //        Debug.Log("ï¿½ï¿½:" + JumpFlag);
     //    }
     //}
 

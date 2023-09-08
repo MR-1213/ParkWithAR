@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Photon.Pun;
 
-public class SpeedController : MonoBehaviour
+public class SpeedController : MonoBehaviourPunCallbacks
 {
     //falseの時歩き、trueの時走る
     public static bool SpeedFlag = false;
@@ -41,15 +42,18 @@ public class SpeedController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (SpeedFlag)
+        if(photonView.IsMine)
         {
-            playerSpeed = runningSpeed;
-            Debug.Log("playerSpeed>>>" + playerSpeed);
-        }
-        else
-        {
-            playerSpeed = walkingSpeed;
-            Debug.Log("playerSpeed>>>" + playerSpeed);
+            if (SpeedFlag)
+            {
+                playerSpeed = runningSpeed;
+                //Debug.Log("playerSpeed>>>" + playerSpeed);
+            }
+            else
+            {
+                playerSpeed = walkingSpeed;
+                //Debug.Log("playerSpeed>>>" + playerSpeed);
+            }
         }
     }
 
@@ -57,13 +61,13 @@ public class SpeedController : MonoBehaviour
     public void OnButtonDown()
     {
         SpeedFlag = true;
-        Debug.Log("SpeedFlag>>>" + SpeedFlag);
+        //Debug.Log("SpeedFlag>>>" + SpeedFlag);
     }
 
     //EventTriggerのPointerUpにアタッチ
     public void OnButtonUP()
     {
         SpeedFlag = false;
-        Debug.Log("SpeedFlag>>>" + SpeedFlag);
+        //Debug.Log("SpeedFlag>>>" + SpeedFlag);
     }
 }
