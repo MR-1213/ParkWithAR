@@ -28,30 +28,22 @@ public class Object_Respawn : MonoBehaviour
     {
         //オブジェクトを非表示にする
         objectToRespawn.SetActive(false);
+        //Debug.Log("HideObject()");
     }
 
     public void ObjectRespawn()
     {
-        //ARカメラの位置と向きからRayを作成
-        Ray ray = new Ray(arCamera.transform.position, -arCamera.transform.up);
-        RaycastHit hit;
-
-        if(Physics.Raycast(ray, out hit)){
-            
-            //Rayが地面に当たった場合
-            if(hit.transform.CompareTag("floor"))
-            {
-                //オブジェクトをスポーンさせる位置
-                Vector3 spawnPosition = hit.point;
-                //地面に配置するためY座標を0に設定（後で要調整！！！）
-                spawnPosition.y = 0;
-                //オブジェクトをスポーンさせる
-                Instantiate(objectToRespawn, spawnPosition,Quaternion.identity);
-                //オブジェクトを表示する
-                objectToRespawn.SetActive(true);
-                Debug.Log("オブジェクトを表示！");
-            }
-        }
+        //Debug.Log("ObjectRespawn()");
+        //オブジェクトをスポーンさせる位置
+        Vector3 spawnPosition = arCamera.transform.position;
+        //地面に配置するためY座標を1に設定（後で要調整！！！）
+        spawnPosition.y = 1;
+        //Debug.Log("position>>" + spawnPosition);
+        //オブジェクトをプレイヤーの位置にスポーンさせる
+        objectToRespawn.transform.position = spawnPosition;
+        //オブジェクトを表示する
+        objectToRespawn.SetActive(true);
+        //Debug.Log("Appeared!");
     }
 
 
