@@ -666,6 +666,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 359455323}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 535925333}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -1068,6 +1080,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 359455323}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 1629195460}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -1142,8 +1166,6 @@ GameObject:
   - component: {fileID: 535925336}
   - component: {fileID: 535925335}
   - component: {fileID: 535925334}
-  - component: {fileID: 535925339}
-  - component: {fileID: 535925338}
   m_Layer: 5
   m_Name: GameCanvas
   m_TagString: Untagged
@@ -1240,41 +1262,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &535925338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 535925333}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6efa303726437f49b16719bb7c26027, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aimSensitivity: 10
-  positionX: 0
-  positionY: 0
-  viewPointValue: 45
-  rotX: 0
-  rotY: 0
---- !u!114 &535925339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 535925333}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87ea604c3a54b1440ba896fcf14eb8a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  joyStick: {fileID: 1061809994157716405}
-  backGround: {fileID: 1061809994203276795}
-  stickRange: 4
-  joyStickPosX: 0
-  joyStickPosY: 0
 --- !u!1 &646853114
 GameObject:
   m_ObjectHideFlags: 0
@@ -1523,6 +1510,8 @@ GameObject:
   - component: {fileID: 838995815}
   - component: {fileID: 838995814}
   - component: {fileID: 838995813}
+  - component: {fileID: 838995818}
+  - component: {fileID: 838995817}
   m_Layer: 5
   m_Name: CommonCanvas
   m_TagString: Untagged
@@ -1613,6 +1602,41 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &838995817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838995812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6efa303726437f49b16719bb7c26027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aimSensitivity: 10
+  positionX: 0
+  positionY: 0
+  viewPointValue: 45
+  rotX: 0
+  rotY: 0
+--- !u!114 &838995818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838995812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87ea604c3a54b1440ba896fcf14eb8a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  joyStick: {fileID: 1061809994157716405}
+  backGround: {fileID: 1061809994203276795}
+  stickRange: 4
+  joyStickPosX: 0
+  joyStickPosY: 0
 --- !u!1 &940823135
 GameObject:
   m_ObjectHideFlags: 0
@@ -2638,7 +2662,7 @@ MonoBehaviour:
   seekImage: {fileID: 21300000, guid: f9f91059c683e1f4d95eeea1b6bf24f7, type: 3}
   hideImage: {fileID: 21300000, guid: 5c70b6b80b865a2478e1c878073f8ff2, type: 3}
   changeToARButton: {fileID: 429595429}
-  joinedPlayers: []
+  joinedPlayer: {fileID: 0}
   isGameOver: 0
   avatarLimitTime: 30
   avatarTime: 0
@@ -3959,7 +3983,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 535925338}
+        - m_Target: {fileID: 838995817}
           m_TargetAssemblyTypeName: JoyStickCam, Assembly-CSharp
           m_MethodName: PointerUP
           m_Mode: 0
@@ -3975,7 +3999,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 535925338}
+        - m_Target: {fileID: 838995817}
           m_TargetAssemblyTypeName: JoyStickCam, Assembly-CSharp
           m_MethodName: OnMove
           m_Mode: 0
@@ -4157,7 +4181,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 535925339}
+        - m_Target: {fileID: 838995818}
           m_TargetAssemblyTypeName: JoyStick_Move, Assembly-CSharp
           m_MethodName: PointerDown
           m_Mode: 0
@@ -4173,7 +4197,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 535925339}
+        - m_Target: {fileID: 838995818}
           m_TargetAssemblyTypeName: JoyStick_Move, Assembly-CSharp
           m_MethodName: PointerUp
           m_Mode: 0
@@ -4189,7 +4213,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 535925339}
+        - m_Target: {fileID: 838995818}
           m_TargetAssemblyTypeName: JoyStick_Move, Assembly-CSharp
           m_MethodName: Move
           m_Mode: 0

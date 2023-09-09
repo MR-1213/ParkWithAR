@@ -25,9 +25,9 @@ public class ChangeModeController : MonoBehaviourPunCallbacks
         sceneTransitionImage.DOFade(1f, 0f).OnComplete(() =>
         {
             //自身のプレイヤーオブジェクトを非アクティブにする
-            GamePlayManager.Instance.joinedPlayer.SetActive(false);
+            //GamePlayManager.Instance.joinedPlayer.SetActive(false);
             //RPC経由で全員に非アクティブにするように伝える
-            photonView.RPC("InActivePlayer", RpcTarget.Others);
+            //photonView.RPC("InActivePlayer", RpcTarget.Others);
 
             sceneTransitionImage.DOFade(0f, 1f);
         });
@@ -49,9 +49,9 @@ public class ChangeModeController : MonoBehaviourPunCallbacks
         sceneTransitionImage.DOFade(1f, 0f).OnComplete(() =>
         {
             //ルームに入っているプレイヤー全員を取得して、アクティブにする
-            GamePlayManager.Instance.joinedPlayer.SetActive(true);
+            //GamePlayManager.Instance.joinedPlayer.SetActive(true);
             //RPC経由で全員にアクティブにするように伝える
-            photonView.RPC("ActivePlayer", RpcTarget.Others);
+            //photonView.RPC("ActivePlayer", RpcTarget.Others);
 
             sceneTransitionImage.DOFade(0f, 1f);
         });

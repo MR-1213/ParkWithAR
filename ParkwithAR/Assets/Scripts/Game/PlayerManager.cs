@@ -20,8 +20,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     private void Start() 
     {
-        stickMove = GameObject.Find("GameCanvas").GetComponent<JoyStick_Move>();
-        stickCam = GameObject.Find("GameCanvas").GetComponent<JoyStickCam>();
+        stickMove = GameObject.Find("CommonCanvas").GetComponent<JoyStick_Move>();
+        stickCam = GameObject.Find("CommonCanvas").GetComponent<JoyStickCam>();
 
         if(!photonView.IsMine)
         {
