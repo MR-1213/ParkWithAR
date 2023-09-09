@@ -2,30 +2,48 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GlobalCoroutine : MonoBehaviour
+public class HideObject : MonoBehaviour
 {
-    public GameObject hideObject; // 隠すオブジェクトをアタッチ
-    private bool isHidden = true; // オブジェクトが非表示状態かどうかを追跡するフラグ
-
-
-    private void Start(IEnumerator coroutine)
+    private void Start()
     {
-        GlobalCoroutine component = hideObject.AddComponent <GlobalCoroutine> ();
-        if (component != null) {
-            // 1分ごとにShowObjectメソッドを呼び出す
-            hideObject.SetActive(false);
-            Debug.Log("コルーチン呼び出し");
-            component.StartCoroutine (component.ShowObject (coroutine));
-        }
+        // 1分ごとにShowPlaneCoroutineを呼び出すコルーチンを開始します。
+        // Planeを非表示にする
+        SetPlaneVisibility(false);
+
+        Debug.Log("コルーチンを呼び出し");
+
+        // 1分ごとにShowPlaneCoroutineを呼び出すコルーチンを開始します。
+        StartCoroutine(ShowPlaneCoroutine());
     }
-    IEnumerator ShowObject(IEnumerator coroutine)
+
+    private IEnumerator ShowPlaneCoroutine()
     {
         while (true)
         {
-            Debug.Log("待機開始");
-            yield return new WaitForSeconds(5f);
-            Debug.Log("待機終了");
-            hideObject.SetActive(true);
+            Debug.Log("コルーチンを開始");
+            // 1分待機
+            yield return new WaitForSeconds(60f);
+
+            Debug.Log("1分経過");
+
+            // Planeを表示する
+            SetPlaneVisibility(true);
+
+            // 5秒待機
+            yield return new WaitForSeconds(10f);
+
+            // Planeを非表示にする
+            SetPlaneVisibility(false);
+        }
+    }
+
+    private void SetPlaneVisibility(bool isVisible)
+    {
+        // PlaneのMesh RendererコンポーネントのEnabledプロパティを設定して表示/非表示を切り替える
+        MeshRenderer planeRenderer = GetComponent<MeshRenderer>();
+        if (planeRenderer != null)
+        {
+            planeRenderer.enabled = isVisible;
         }
     }
 }
