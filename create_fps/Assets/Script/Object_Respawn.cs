@@ -14,10 +14,14 @@ public class Object_Respawn : MonoBehaviour
     private static int pressedCounter = 0;
 
 
+    //ARカメラ
+    private static Camera arCamera;
+
+
     // ゲーム開始時に初期位置を設定する
     void Start()
     {
-        initialPosition = objectToRespawn.transform.position;
+        arCamera = Camera.main;
     }
 
     public void HideObject()
@@ -28,11 +32,26 @@ public class Object_Respawn : MonoBehaviour
 
     public void ObjectRespawn()
     {
-        //オブジェクトを初期位置にリスポーンさせる
-        objectToRespawn.transform.position = initialPosition;
-        
-        //オブジェクトを表示する
-        objectToRespawn.SetActive(true);
+        //ARカメラの位置と向きからRayを作成
+        Ray ray = new Ray(arCamera.transform.position, -arCamera.transform.up);
+        RaycastHit hit;
+
+        if(Physics.Raycast(ray, out hit)){
+            
+            //Rayが地面に当たった場合
+            if(hit.transform.CompareTag("floor"))
+            {
+                //オブジェクトをスポーンさせる位置
+                Vector3 spawnPosition = hit.point;
+                //地面に配置するためY座標を0に設定（後で要調整！！！）
+                spawnPosition.y = 0;
+                //オブジェクトをスポーンさせる
+                Instantiate(objectToRespawn, spawnPosition,Quaternion.identity);
+                //オブジェクトを表示する
+                objectToRespawn.SetActive(true);
+                Debug.Log("オブジェクトを表示！");
+            }
+        }
     }
 
 
@@ -51,7 +70,6 @@ public class Object_Respawn : MonoBehaviour
             //リスポーンさせる関数の呼び出し
             ObjectRespawn();
             //Debug.Log("pressedCounter[2] >>>" + pressedCounter);
-
             //カウンターをリセット
             pressedCounter = 0;
         }
