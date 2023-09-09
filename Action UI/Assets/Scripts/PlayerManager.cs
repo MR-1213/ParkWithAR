@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class PlayerManagement : MonoBehaviour
+public class PlayerManager : MonoBehaviour
 {
     public GameObject catchUI; // ゲームオーバーUIのGameObjectをアタッチ
     public Text catchText; // ゲームオーバー時に表示するテキスト
