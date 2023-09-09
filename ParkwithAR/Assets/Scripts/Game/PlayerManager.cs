@@ -9,10 +9,17 @@ using ExitGames.Client.Photon.StructWrapping;
 
 public class PlayerManager : MonoBehaviourPunCallbacks
 {
+    public Vector3 distanceToMasterPlayer = Vector3.zero;
+    public Vector3 distanceToMasterAvator = Vector3.zero;
+    public Vector3 distanceToNonMasterPlayer = Vector3.zero;
+    public Vector3 distanceToNonMasterAvator = Vector3.zero;
+
+
     [SerializeField] private SpeedController speedController;
     [SerializeField] private UpdateRole updateRole;
     private JoyStick_Move stickMove;
     private JoyStickCam stickCam;
+    private SetStageOrigin setStageOrigin;
 
     private float speed = 3f;
     private bool isGameOver = false;
@@ -22,6 +29,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     {
         stickMove = GameObject.Find("CommonCanvas").GetComponent<JoyStick_Move>();
         stickCam = GameObject.Find("CommonCanvas").GetComponent<JoyStickCam>();
+        setStageOrigin = GameObject.Find("GameManager").GetComponent<SetStageOrigin>();
 
         if(!photonView.IsMine)
         {
@@ -47,6 +55,22 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
             //回転を更新する
             transform.rotation = Quaternion.Euler(stickCam.rotY, stickCam.rotX, 0);
+
+            //ステージの原点とプレイヤーの距離を計算
+            Vector3 distanceToPlayer = setStageOrigin.CalculatePlayerDistance(updateRole.gameObject.transform.position);
+            //ステージの原点とアバターの距離を計算
+            Vector3 distanceToAvator = setStageOrigin.CalculateAvatorDistance(transform.position);
+
+            this.distanceToMasterPlayer = setStageOrigin.CalculatePlayerDistance(updateRole.gameObject.transform.position);
+            this.distanceToMasterAvator = setStageOrigin.CalculateAvatorDistance(transform.position);
+            this.distanceToNonMasterPlayer = setStageOrigin.CalculatePlayerDistance(updateRole.gameObject.transform.position);
+            this.distanceToNonMasterAvator = setStageOrigin.CalculateAvatorDistance(transform.position);
+
+            Debug.Log("マスタークライアントのプレイヤー: " + this.distanceToMasterPlayer);
+            Debug.Log("マスタークライアントのアバター: " + this.distanceToMasterAvator);
+            Debug.Log("参加者のプレイヤー: " + this.distanceToNonMasterPlayer);
+            Debug.Log("参加者のアバター: " + this.distanceToNonMasterAvator);
+
         }
 
         if(GamePlayManager.Instance.isGameOver && !this.isGameOver)

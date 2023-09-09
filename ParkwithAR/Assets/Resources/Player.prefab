@@ -837,6 +837,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cab7cf1eb0850847960d2fad8389978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  distanceToMasterPlayer: {x: 0, y: 0, z: 0}
+  distanceToMasterAvator: {x: 0, y: 0, z: 0}
+  distanceToNonMasterPlayer: {x: 0, y: 0, z: 0}
+  distanceToNonMasterAvator: {x: 0, y: 0, z: 0}
   speedController: {fileID: 1347383101817030625}
   updateRole: {fileID: 3992409487123822976}
 --- !u!114 &6801728819768286383
