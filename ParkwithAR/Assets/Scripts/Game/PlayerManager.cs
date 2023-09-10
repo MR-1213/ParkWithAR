@@ -66,10 +66,10 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             this.distanceToNonMasterPlayer = setStageOrigin.CalculatePlayerDistance(updateRole.gameObject.transform.position);
             this.distanceToNonMasterAvator = setStageOrigin.CalculateAvatorDistance(transform.position);
 
-            Debug.Log("マスタークライアントのプレイヤー: " + this.distanceToMasterPlayer);
-            Debug.Log("マスタークライアントのアバター: " + this.distanceToMasterAvator);
-            Debug.Log("参加者のプレイヤー: " + this.distanceToNonMasterPlayer);
-            Debug.Log("参加者のアバター: " + this.distanceToNonMasterAvator);
+            //Debug.Log("マスタークライアントのプレイヤー: " + this.distanceToMasterPlayer);
+            //Debug.Log("マスタークライアントのアバター: " + this.distanceToMasterAvator);
+            //Debug.Log("参加者のプレイヤー: " + this.distanceToNonMasterPlayer);
+            //Debug.Log("参加者のアバター: " + this.distanceToNonMasterAvator);
 
         }
 

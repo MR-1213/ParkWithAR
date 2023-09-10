@@ -34,9 +34,7 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
     public float avatarTime = 0f;
 
     //アバターを使用しているかどうか
-    public bool isAvatar = false;
-
-    private TMP_Text debugText;
+    public bool isAvator = false;
 
     private void Awake()
     {
@@ -58,7 +56,6 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.IsMessageQueueRunning = true;
 
-        debugText = GameObject.Find("DebugText").GetComponent<TMP_Text>();
         changeModeController = GetComponent<ChangeModeController>();
 
         // プレイヤーを生成
@@ -250,7 +247,7 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
             }
         }
 
-        if(isAvatar)
+        if(isAvator)
         {
             //アバターを使用している場合は、使用時間を更新
             avatarTime += Time.deltaTime;

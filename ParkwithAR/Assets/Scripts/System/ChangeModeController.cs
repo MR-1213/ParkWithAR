@@ -18,7 +18,6 @@ public class ChangeModeController : MonoBehaviourPunCallbacks
 
     public void ChangeToAR()
     {
-        
         gameCamera = Camera.main;
         gameCamera.gameObject.SetActive(false);
 
@@ -31,7 +30,7 @@ public class ChangeModeController : MonoBehaviourPunCallbacks
 
             sceneTransitionImage.DOFade(0f, 1f);
         });
-        GamePlayManager.Instance.isAvatar = false;
+        GamePlayManager.Instance.isAvator = false;
         arCamera.gameObject.SetActive(true);
     }
 
@@ -55,7 +54,7 @@ public class ChangeModeController : MonoBehaviourPunCallbacks
 
             sceneTransitionImage.DOFade(0f, 1f);
         });
-        GamePlayManager.Instance.isAvatar = true;
+        GamePlayManager.Instance.isAvator = true;
         gameCamera.gameObject.SetActive(true); 
     }
 
